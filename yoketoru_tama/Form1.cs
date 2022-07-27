@@ -7,11 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace yoketoru_tama
 {
     public partial class Form1 : Form
     {
+        const bool isDebug = true;
         enum State
         {
             None=-1,
@@ -23,6 +25,9 @@ namespace yoketoru_tama
         State currentState = State.None;
         State nextState=State.Title;
 
+        [DllImport("user32.dll")]
+        public static extern short GetAsyncKeyState(int vKey);
+
         public Form1()
         {
             InitializeComponent();
@@ -33,6 +38,14 @@ namespace yoketoru_tama
             if(nextState!=State.None)
             {
                 iniProc();
+            }
+
+            if(isDebug)
+            {
+                if(GetAsyncKeyState((int)Keys.O)<0)
+                {
+                    nextState = State.Gameover;
+                }
             }
         }
 
