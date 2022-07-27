@@ -126,6 +126,20 @@ namespace yoketoru_tama
                     timeLabel.Visible = true;
                     itemcountLabel.Visible = true;
                     countdownLabel.Visible = true;
+                    
+                    for(int i=EnemyIndex;i<ChrMax;i++)
+                    {
+                        if(i<ItemIndex)
+                        {
+                            chrs[i].Left = rand.Next(ClientSize.Width - chrs[i].Width);
+                            chrs[i].Top = rand.Next(ClientSize.Height - chrs[i].Height);
+                        }
+                        else
+                        {
+                            chrs[i].Left = rand.Next(ClientSize.Width - chrs[i].Width);
+                            chrs[i].Top = rand.Next(-ClientSize.Height,(ClientSize.Height - chrs[i].Height) - ClientSize.Height);
+                        }
+                    }
                     break;
 
                 case State.Gameover:
