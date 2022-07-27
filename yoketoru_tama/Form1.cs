@@ -15,11 +15,14 @@ namespace yoketoru_tama
     {
         const bool isDebug = true;
 
+        const int SpeedMax = 10;
         const int PlayerMax = 1;
         const int EnemyMax = 10;
         const int ItemMax = 10;
         const int ChrMax = PlayerMax + EnemyMax + ItemMax;
         Label[] chrs = new Label[ChrMax];
+        int[] vx = new int[ChrMax];
+        int[] vy = new int[ChrMax];
         const int PlayerIndex = 0;
         const int EnemyIndex = PlayerMax + PlayerIndex;
         const int ItemIndex = EnemyMax + EnemyIndex;
@@ -65,6 +68,7 @@ namespace yoketoru_tama
                     chrs[i].Text = ItemText;
                 }
                 Controls.Add(chrs[i]);
+                chrs[i].Font = tempLabel.Font;
             }
         }
 
@@ -94,6 +98,48 @@ namespace yoketoru_tama
             Point fpos = PointToClient(MousePosition);
             chrs[PlayerIndex].Left = fpos.X - chrs[PlayerIndex].Width / 2;
             chrs[PlayerIndex].Top = fpos.Y - chrs[PlayerIndex].Height / 2;
+
+            for(int i=EnemyIndex;i<ChrMax;i++)
+            {
+                chrs[i].Left += vx[i];
+                chrs[i].Top += vy[i];
+
+                if (i<ItemIndex)
+                {
+                    if(chrs[i].Left<0)
+                    {
+                        vx[i] = Math.Abs(vx[i]);
+                    }
+                    if(chrs[i].Top<0)
+                    {
+                        vy[i] = Math.Abs(vy[i]);
+                    }
+                    if(chrs[i].Right>ClientSize.Width)
+                    {
+                        vx[i] = -Math.Abs(vx[i]);
+                    }
+                    if(chrs[i].Bottom>ClientSize.Height)
+                    {
+                        vy[i] = -Math.Abs(vy[i]);
+                    }
+                }
+                else
+                {
+                    if (chrs[i].Left < 0)
+                    {
+                        vx[i] = Math.Abs(vx[i]);
+                    }
+                    if (chrs[i].Right > ClientSize.Width)
+                    {
+                        vx[i] = -Math.Abs(vx[i]);
+                    }
+                    if (chrs[i].Top > ClientSize.Height)
+                    {
+                        chrs[i].Left = rand.Next(ClientSize.Width - chrs[i].Width);
+                        chrs[i].Top = rand.Next(-ClientSize.Height, (ClientSize.Height - chrs[i].Height) - ClientSize.Height);
+                    }
+                }
+            }
         }
 
         void iniProc()
@@ -129,15 +175,18 @@ namespace yoketoru_tama
                     
                     for(int i=EnemyIndex;i<ChrMax;i++)
                     {
-                        if(i<ItemIndex)
+                        vx[i] = rand.Next(-SpeedMax, SpeedMax + 1);
+                        if (i<ItemIndex)
                         {
                             chrs[i].Left = rand.Next(ClientSize.Width - chrs[i].Width);
                             chrs[i].Top = rand.Next(ClientSize.Height - chrs[i].Height);
+                            vy[i] = rand.Next(-SpeedMax, SpeedMax + 1);
                         }
                         else
                         {
                             chrs[i].Left = rand.Next(ClientSize.Width - chrs[i].Width);
                             chrs[i].Top = rand.Next(-ClientSize.Height,(ClientSize.Height - chrs[i].Height) - ClientSize.Height);
+                            vy[i] = rand.Next(SpeedMax + 1);
                         }
                     }
                     break;
