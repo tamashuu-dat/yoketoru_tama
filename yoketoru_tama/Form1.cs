@@ -82,6 +82,18 @@ namespace yoketoru_tama
                     nextState = State.Gameover;
                 }
             }
+
+            if(currentState==State.Game)
+            {
+                UpdateGame();
+            }
+        }
+
+        void UpdateGame()
+        {
+            Point fpos = PointToClient(MousePosition);
+            chrs[PlayerIndex].Left = fpos.X - chrs[PlayerIndex].Width / 2;
+            chrs[PlayerIndex].Top = fpos.Y - chrs[PlayerIndex].Height / 2;
         }
 
         void iniProc()
