@@ -122,6 +122,15 @@ namespace yoketoru_tama
                     {
                         vy[i] = -Math.Abs(vy[i]);
                     }
+
+                    //当たり判定
+                    if ((chrs[PlayerIndex].Left < chrs[i].Right)
+                        && (chrs[PlayerIndex].Top < chrs[i].Bottom)
+                        && (chrs[PlayerIndex].Right > chrs[i].Left)
+                        && (chrs[PlayerIndex].Bottom > chrs[i].Top))
+                    {
+                        nextState = State.Gameover;
+                    }
                 }
                 else
                 {
@@ -137,6 +146,15 @@ namespace yoketoru_tama
                     {
                         chrs[i].Left = rand.Next(ClientSize.Width - chrs[i].Width);
                         chrs[i].Top = rand.Next(-ClientSize.Height, (ClientSize.Height - chrs[i].Height) - ClientSize.Height);
+                    }
+
+                    //当たり判定
+                    if((chrs[PlayerIndex].Left<=chrs[i].Right)
+                        &&(chrs[PlayerIndex].Top<=chrs[i].Bottom)
+                        &&(chrs[PlayerIndex].Right>=chrs[i].Left)
+                        &&(chrs[PlayerIndex].Bottom>=chrs[i].Top))
+                    {
+                        MessageBox.Show("重なった");
                     }
                 }
             }
