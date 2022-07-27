@@ -111,7 +111,7 @@ namespace yoketoru_tama
             // titleButton
             // 
             this.titleButton.Font = new System.Drawing.Font("MS UI Gothic", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.titleButton.Location = new System.Drawing.Point(388, 262);
+            this.titleButton.Location = new System.Drawing.Point(314, 262);
             this.titleButton.Name = "titleButton";
             this.titleButton.Size = new System.Drawing.Size(199, 113);
             this.titleButton.TabIndex = 6;
@@ -167,7 +167,7 @@ namespace yoketoru_tama
             // nextButton
             // 
             this.nextButton.Font = new System.Drawing.Font("MS UI Gothic", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.nextButton.Location = new System.Drawing.Point(489, 262);
+            this.nextButton.Location = new System.Drawing.Point(314, 262);
             this.nextButton.Name = "nextButton";
             this.nextButton.Size = new System.Drawing.Size(199, 113);
             this.nextButton.TabIndex = 11;
