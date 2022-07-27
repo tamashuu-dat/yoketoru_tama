@@ -26,12 +26,19 @@ namespace yoketoru_tama
         const int PlayerIndex = 0;
         const int EnemyIndex = PlayerMax + PlayerIndex;
         const int ItemIndex = EnemyMax + EnemyIndex;
+        const int StartTime = 0;
 
         const string PlayerText = "(・ω・)";
         const string EnemyText = "◇";
         const string ItemText = "★";
 
         static Random rand = new Random();
+
+        int itemcount;
+        int time;
+        int score;
+        int hightscore = 0;
+        int countdown;
 
         enum State
         {
@@ -90,74 +97,101 @@ namespace yoketoru_tama
             if(currentState==State.Game)
             {
                 UpdateGame();
+                itemcountLabel.Text = ("★:" + itemcount);
+                scoreLabel.Text = ("Score:" + score);
             }
         }
 
         void UpdateGame()
         {
-            Point fpos = PointToClient(MousePosition);
-            chrs[PlayerIndex].Left = fpos.X - chrs[PlayerIndex].Width / 2;
-            chrs[PlayerIndex].Top = fpos.Y - chrs[PlayerIndex].Height / 2;
-
-            for(int i=EnemyIndex;i<ChrMax;i++)
+            timer1.Interval = 1000;
+            countdown--;
+            if(countdown>0)
             {
-                chrs[i].Left += vx[i];
-                chrs[i].Top += vy[i];
+                countdownLabel.Text = ("" + countdown);
+            }
+            else if(countdown==0)
+            {
+                countdownLabel.Text = ("Start!!");
+            }
+            else
+            {
+                timer1.Interval = 100;
+                countdownLabel.Visible = false;
+            }
 
-                if (i<ItemIndex)
+            if(!countdownLabel.Visible)
+            {
+                time++;
+                score++;
+                timeLabel.Text = ("Time:" + time);
+                Point fpos = PointToClient(MousePosition);
+                chrs[PlayerIndex].Left = fpos.X - chrs[PlayerIndex].Width / 2;
+                chrs[PlayerIndex].Top = fpos.Y - chrs[PlayerIndex].Height / 2;
+
+                for (int i = EnemyIndex; i < ChrMax; i++)
                 {
-                    if(chrs[i].Left<0)
-                    {
-                        vx[i] = Math.Abs(vx[i]);
-                    }
-                    if(chrs[i].Top<0)
-                    {
-                        vy[i] = Math.Abs(vy[i]);
-                    }
-                    if(chrs[i].Right>ClientSize.Width)
-                    {
-                        vx[i] = -Math.Abs(vx[i]);
-                    }
-                    if(chrs[i].Bottom>ClientSize.Height)
-                    {
-                        vy[i] = -Math.Abs(vy[i]);
-                    }
+                    chrs[i].Left += vx[i];
+                    chrs[i].Top += vy[i];
 
-                    //当たり判定
-                    if ((chrs[PlayerIndex].Left < chrs[i].Right)
-                        && (chrs[PlayerIndex].Top < chrs[i].Bottom)
-                        && (chrs[PlayerIndex].Right > chrs[i].Left)
-                        && (chrs[PlayerIndex].Bottom > chrs[i].Top))
+                    if (i < ItemIndex)
                     {
-                        nextState = State.Gameover;
+                        if (chrs[i].Left < 0)
+                        {
+                            vx[i] = Math.Abs(vx[i]);
+                        }
+                        if (chrs[i].Top < 0)
+                        {
+                            vy[i] = Math.Abs(vy[i]);
+                        }
+                        if (chrs[i].Right > ClientSize.Width)
+                        {
+                            vx[i] = -Math.Abs(vx[i]);
+                        }
+                        if (chrs[i].Bottom > ClientSize.Height)
+                        {
+                            vy[i] = -Math.Abs(vy[i]);
+                        }
+                        //当たり判定
+                        if ((chrs[PlayerIndex].Left+5 < chrs[i].Right)
+                                && (chrs[PlayerIndex].Top+5 < chrs[i].Bottom)
+                                && (chrs[PlayerIndex].Right-5 > chrs[i].Left)
+                                && (chrs[PlayerIndex].Bottom-5 > chrs[i].Top))
+                        {
+                            nextState = State.Gameover;
+                        }
                     }
-                }
-                else
-                {
-                    if (chrs[i].Left < 0)
+                    else
                     {
-                        vx[i] = Math.Abs(vx[i]);
-                    }
-                    if (chrs[i].Right > ClientSize.Width)
-                    {
-                        vx[i] = -Math.Abs(vx[i]);
-                    }
-                    if (chrs[i].Top > ClientSize.Height)
-                    {
-                        chrs[i].Left = rand.Next(ClientSize.Width - chrs[i].Width);
-                        chrs[i].Top = rand.Next(-ClientSize.Height, (ClientSize.Height - chrs[i].Height) - ClientSize.Height);
-                    }
+                        if (chrs[i].Left < 0)
+                        {
+                            vx[i] = Math.Abs(vx[i]);
+                        }
+                        if (chrs[i].Right > ClientSize.Width)
+                        {
+                            vx[i] = -Math.Abs(vx[i]);
+                        }
+                        if (chrs[i].Top > ClientSize.Height)
+                        {
+                            chrs[i].Left = rand.Next(ClientSize.Width - chrs[i].Width);
+                            chrs[i].Top = rand.Next(-ClientSize.Height, (ClientSize.Height - chrs[i].Height) - ClientSize.Height);
+                        }
 
-                    //当たり判定
-                    if((chrs[PlayerIndex].Left<=chrs[i].Right)
-                        &&(chrs[PlayerIndex].Top<=chrs[i].Bottom)
-                        &&(chrs[PlayerIndex].Right>=chrs[i].Left)
-                        &&(chrs[PlayerIndex].Bottom>=chrs[i].Top))
-                    {
-                        MessageBox.Show("重なった");
+                        //当たり判定
+                        if ((chrs[PlayerIndex].Left <= chrs[i].Right)
+                                && (chrs[PlayerIndex].Top <= chrs[i].Bottom)
+                                && (chrs[PlayerIndex].Right >= chrs[i].Left)
+                                && (chrs[PlayerIndex].Bottom >= chrs[i].Top))
+                        {
+                            chrs[i].Left = rand.Next(ClientSize.Width - chrs[i].Width);
+                            chrs[i].Top = rand.Next(-ClientSize.Height, (ClientSize.Height - chrs[i].Height) - ClientSize.Height);
+                            score += 50;
+                            itemcount++;
+                        }
                     }
                 }
             }
+            
         }
 
         void iniProc()
@@ -179,6 +213,11 @@ namespace yoketoru_tama
                     scoreLabel.Visible = false;
                     timeLabel.Visible = false;
                     countdownLabel.Visible = false;
+                    kousinLabel.Visible = false;
+                    for (int i = PlayerIndex; i < ChrMax; i++)
+                    {
+                        chrs[i].Visible = false;
+                    }
                     break;
 
                 case State.Game:
@@ -190,9 +229,9 @@ namespace yoketoru_tama
                     timeLabel.Visible = true;
                     itemcountLabel.Visible = true;
                     countdownLabel.Visible = true;
-                    
-                    for(int i=EnemyIndex;i<ChrMax;i++)
-                    {
+
+                    for (int i=EnemyIndex;i<ChrMax;i++)
+                    { 
                         vx[i] = rand.Next(-SpeedMax, SpeedMax + 1);
                         if (i<ItemIndex)
                         {
@@ -207,6 +246,16 @@ namespace yoketoru_tama
                             vy[i] = rand.Next(SpeedMax + 1);
                         }
                     }
+
+                    itemcount = 0;
+                    time = StartTime;
+                    score = 0;
+                    countdown = 4;
+
+                    for (int i = PlayerIndex; i < ChrMax; i++)
+                    {
+                        chrs[i].Visible = true;
+                    }
                     break;
 
                 case State.Gameover:
@@ -219,6 +268,13 @@ namespace yoketoru_tama
                     titleButton.Visible = true;
                     gameoverLabel.Visible = false;
                     nextButton.Visible = false;
+
+                    if(score>hightscore)
+                    {
+                        hightscore = score;
+                        kousinLabel.Visible = true;
+                    }
+                    highscoreLabel.Text = ("HiScore:" + hightscore);
                     break;
             }
         }
@@ -236,6 +292,11 @@ namespace yoketoru_tama
         private void nextButton_Click(object sender, EventArgs e)
         {
             nextState = State.Score;
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+
         }
     }
 }
