@@ -274,7 +274,7 @@ namespace yoketoru_tama
                         hightscore = score;
                         kousinLabel.Visible = true;
                     }
-                    highscoreLabel.Text = ("HiScore:" + hightscore);
+                    highscoreLabel.Text = ("HighScore:" + hightscore);
                     break;
             }
         }
