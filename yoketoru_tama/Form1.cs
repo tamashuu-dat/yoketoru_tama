@@ -99,6 +99,7 @@ namespace yoketoru_tama
                 UpdateGame();
                 itemcountLabel.Text = ("★:" + itemcount);
                 scoreLabel.Text = ("Score:" + score);
+                timeLabel.Text = ("Time:" + time);
             }
         }
 
@@ -112,15 +113,16 @@ namespace yoketoru_tama
             }
             else if(countdown==0)
             {
-                countdownLabel.Text = ("Start!!");
+                countdownLabel.Visible = false;
+                startLabel.Visible = true;
             }
             else
             {
                 timer1.Interval = 100;
-                countdownLabel.Visible = false;
+                startLabel.Visible = false;
             }
 
-            if(!countdownLabel.Visible)
+            if((!startLabel.Visible)&&(!countdownLabel.Visible))
             {
                 time++;
                 score++;
@@ -213,6 +215,7 @@ namespace yoketoru_tama
                     scoreLabel.Visible = false;
                     timeLabel.Visible = false;
                     countdownLabel.Visible = false;
+                    startLabel.Visible = false;
                     kousinLabel.Visible = false;
                     for (int i = PlayerIndex; i < ChrMax; i++)
                     {

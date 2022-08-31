@@ -44,6 +44,7 @@ namespace yoketoru_tama
             this.countdownLabel = new System.Windows.Forms.Label();
             this.nextButton = new System.Windows.Forms.Button();
             this.kousinLabel = new System.Windows.Forms.Label();
+            this.startLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // titleLabel
@@ -73,7 +74,7 @@ namespace yoketoru_tama
             this.gameoverLabel.AutoSize = true;
             this.gameoverLabel.Font = new System.Drawing.Font("MS UI Gothic", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.gameoverLabel.ForeColor = System.Drawing.Color.Blue;
-            this.gameoverLabel.Location = new System.Drawing.Point(293, 148);
+            this.gameoverLabel.Location = new System.Drawing.Point(271, 150);
             this.gameoverLabel.Name = "gameoverLabel";
             this.gameoverLabel.Size = new System.Drawing.Size(233, 48);
             this.gameoverLabel.TabIndex = 2;
@@ -103,7 +104,7 @@ namespace yoketoru_tama
             // 
             this.startButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
             this.startButton.Font = new System.Drawing.Font("MS UI Gothic", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.startButton.Location = new System.Drawing.Point(267, 256);
+            this.startButton.Location = new System.Drawing.Point(276, 260);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(250, 113);
             this.startButton.TabIndex = 5;
@@ -115,7 +116,7 @@ namespace yoketoru_tama
             // 
             this.titleButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
             this.titleButton.Font = new System.Drawing.Font("MS UI Gothic", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.titleButton.Location = new System.Drawing.Point(267, 256);
+            this.titleButton.Location = new System.Drawing.Point(276, 260);
             this.titleButton.Name = "titleButton";
             this.titleButton.Size = new System.Drawing.Size(250, 113);
             this.titleButton.TabIndex = 6;
@@ -173,7 +174,7 @@ namespace yoketoru_tama
             // 
             this.nextButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
             this.nextButton.Font = new System.Drawing.Font("MS UI Gothic", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.nextButton.Location = new System.Drawing.Point(267, 256);
+            this.nextButton.Location = new System.Drawing.Point(276, 260);
             this.nextButton.Name = "nextButton";
             this.nextButton.Size = new System.Drawing.Size(250, 113);
             this.nextButton.TabIndex = 11;
@@ -191,12 +192,23 @@ namespace yoketoru_tama
             this.kousinLabel.TabIndex = 12;
             this.kousinLabel.Text = "ハイスコア更新!!";
             // 
+            // startLabel
+            // 
+            this.startLabel.AutoSize = true;
+            this.startLabel.Font = new System.Drawing.Font("MS UI Gothic", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.startLabel.Location = new System.Drawing.Point(266, 177);
+            this.startLabel.Name = "startLabel";
+            this.startLabel.Size = new System.Drawing.Size(226, 60);
+            this.startLabel.TabIndex = 13;
+            this.startLabel.Text = "スタート‼";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.startLabel);
             this.Controls.Add(this.kousinLabel);
             this.Controls.Add(this.nextButton);
             this.Controls.Add(this.countdownLabel);
@@ -233,6 +245,7 @@ namespace yoketoru_tama
         private System.Windows.Forms.Label countdownLabel;
         private System.Windows.Forms.Button nextButton;
         private System.Windows.Forms.Label kousinLabel;
+        private System.Windows.Forms.Label startLabel;
     }
 }
 
