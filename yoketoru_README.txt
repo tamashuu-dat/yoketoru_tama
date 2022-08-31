@@ -18,7 +18,7 @@
 - 障害物に当たるまで終わりません。ひたすらスコアを稼ぎましょう。
 
 # 公開先
-- [ゲームのページを開く](https://datgm20.github.io/OpenYoketoru2020/WebGL/index.html)
+- 
 
 # 使用アセット
 - なし
